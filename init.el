@@ -1,3 +1,21 @@
+(require 'package)
+
+;; MELPAを追加
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; MELPA-stableを追加
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;; Marmaladeを追加
+(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+;; Orgを追加
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
+;; 初期化
+(package-initialize)
+
+
 ;; locad-pathを追加する関数を定義
 (defun add-to-load-path (&rest paths)
   (let (path)
@@ -53,6 +71,5 @@
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
   (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
   (ac-config-default))
-
 
 

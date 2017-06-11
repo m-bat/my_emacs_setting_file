@@ -1,17 +1,15 @@
-(require 'package)
 
+;;; package --- summary:
+
+(require 'package)
 ;; MELPAを追加
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
 ;; MELPA-stableを追加
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
 ;; Marmaladeを追加
 (add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
 ;; Orgを追加
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-
 ;; 初期化
 (package-initialize)
 
@@ -71,5 +69,70 @@
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
   (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
   (ac-config-default))
+
+;;flycheck
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (undohist anything flycheck-pos-tip))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+;;package-install anything
+;;(require 'anything-config)
+(define-key global-map (kbd "C-x b") 'anything) ;anythingをC-x bで開くようにする
+(when (require 'anything nil t)
+  (setq
+   ;; 候補を表示するまでの時間。デフォルトは0.5
+   anything-idle-delay 0.1
+   ;; タイプして再描写するまでの時間。デフォルトは0.1
+   anything-input-idle-delay 0.1
+   ;; 候補の最大表示数。デフォルトは50
+   anything-candidate-number-limit 100
+   ;; 候補が多いときに体感速度を早くする
+   anything-quick-update t
+   ;; 候補選択ショートカットをアルファベットに
+   anything-enable-shortcuts 'alphabet)
+
+  (when (require 'anything-config nil t)
+    ;; root権限でアクションを実行するときのコマンド
+    ;; デフォルトは"su"
+    (setq anything-su-or-sudo "sudo"))
+
+  (require 'anything-match-plugin nil t)
+  (and (equal current-language-environment "Japanese")
+       (executable-find "cmigemo")
+       (require 'anything-migemo nil t))
+  (when (require 'anything-complete nil t)
+    ;; M-xによる補完をAnythingで行なう
+    ;; (anything-read-string-mode 1)
+    ;; lispシンボルの補完候補の再検索時間
+    (anything-lisp-complete-symbol-set-timer 150))
+
+  (require 'anything-show-completion nil t)
+
+  (when (require 'auto-install nil t)
+    (require 'anything-auto-install nil t))
+
+  (when (require 'descbinds-anything nil t)
+    ;; describe-bindingsをAnythingに置き換える
+    (descbinds-anything-install))
+
+  (require 'anything-grep nil t))
+
+;;package-install undohist
+;(when (require 'undohist nil t)
+;(undohist-initialize))
+
+;; package-install undo-tree
+(when (require 'undo-tree nil t)
+  (global-undo-tree-mode))
+	   
+
 
 

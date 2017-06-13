@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+foreach file ($argv[*]) 
+	echo $file
+	java -classpath $HOME/coins/current/classes coins.driver.Driver $file -coins:assembler=as,target=x86_64,debuginfo,snapshot,lir-opt=divex/peephole
+    end

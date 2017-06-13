@@ -76,7 +76,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (undohist anything flycheck-pos-tip))))
+ '(package-selected-packages
+   (quote
+	(php-mode moccur-edit color-moccur undohist anything flycheck-pos-tip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -133,6 +135,16 @@
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
 	   
+;; package-install color-moccur
+(when (require 'color-moccur nil t)
+  ;;グローバルマップにoccur-by-moccurを割り当て
+  (define-key global-map (kbd "C-s") 'occur-by-moccur))
 
+;;tramp
+(require 'tramp)						;sshでサーバにあるファイルを直接変更できる
+(setq tramp-default-method "ssh")
+
+;;package-install php-mode
+(require 'php-mode)
 
 

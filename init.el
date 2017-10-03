@@ -19,16 +19,16 @@
   (let (path)
     (dolist (path paths paths)
       (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
-	(add-to-list 'load-path default-directory)
-	(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-	    (normal-top-level-add-subdirs-to-load-path))))))
+		(add-to-list 'load-path default-directory)
+		(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+			(normal-top-level-add-subdirs-to-load-path))))))
 
 ;;elispとconfdirectoryをsubdirectryごとにload-pathに追加
 (add-to-load-path "elisp" "conf")
 
 ;; (install-elisp "https://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
-;;install directoryを設定する 初期値は ~/.emacs.d/auto-install/
+  ;;install directoryを設定する 初期値は ~/.emacs.d/auto-install/
   (setq auto-install-directory "~/.emacs.d/elisp/")
   ;; EmacsWikiに登録されているelispの名前を取得する
   ;; いちいちnetworkに繋るため、起動が遅くなる. comment outしておく（現状）
@@ -39,18 +39,18 @@
 
 ;;;emacsの表示に関する設定
 ;;対応する括弧を強調表示する
-;paren-mode 対応する括弧を強調して表示する
+										;paren-mode 対応する括弧を強調して表示する
 (setq show-paren-delay 0) ;表示までの秒数。初期値は0.125
 (show-paren-mode t) ;有効化
-;parenのスタイル expressionは括弧内も強調表示
+										;parenのスタイル expressionは括弧内も強調表示
 (setq show-paren-style 'expression)
-;フェイス（後述）を変更
+										;フェイス（後述）を変更
 (set-face-background 'show-paren-match-face "yellow")
 ;;行番号を表示する
 (global-linum-mode)
 ;;インテンドの設定
 (setq default-tab-width 4)
-; ホックを使った設定
+										; ホックを使った設定
 (defun my-c-c++-mode-init ()
   (setq c-basic-offset 4)
   )
@@ -131,17 +131,17 @@
   (require 'anything-grep nil t))
 
 ;;package-install undohist
-;(when (require 'undohist nil t)
-;(undohist-initialize))
+										;(when (require 'undohist nil t)
+										;(undohist-initialize))
 
 ;; package-install undo-tree
 (when (require 'undo-tree nil t)
   (global-undo-tree-mode))
-	   
+
 ;; package-install color-moccur
 (when (require 'color-moccur nil t)
   ;;グローバルマップにoccur-by-moccurを割り当て
-  (define-key global-map (kbd "C-s") 'occur-by-moccur))
+  (define-key global-map (kbd "C-q") 'occur-by-moccur))
 
 ;;tramp
 (require 'tramp)						;sshでサーバにあるファイルを直接変更できる
@@ -195,7 +195,7 @@
   ;;css,js,php,etc..の範囲をbg色で表示
   ;; (setq web-mode-enable-block-faces t)
   ;; (custom-set-faces
-  ;;  '(web-mode-server-face
+  ;;  '(web-mode-serer-face
   ;;    ((t (:background "grey"))))                  ; template Blockの背景色
   ;;  '(web-mode-css-face
   ;;    ((t (:background "grey18"))))                ; CSS Blockの背景色
@@ -203,7 +203,7 @@
   ;;    ((t (:background "grey36"))))                ; javascript Blockの背景色
   ;;  )
   ;;(setq web-mode-enable-heredoc-fontification t)
-)
+  )
 (add-hook 'web-mode-hook  'web-mode-hook)
 ;; 色の設定
 (custom-set-faces

@@ -26,7 +26,7 @@
 			(normal-top-level-add-subdirs-to-load-path))))))
 
 ;;elispとconfdirectoryをsubdirectryごとにload-pathに追加
-(add-to-load-path "elisp" "conf")
+;;(add-to-load-path "elisp" "conf")
 
 ;; (install-elisp "https://www.emacswiki.org/emacs/download/auto-install.el")
 (when (require 'auto-install nil t)
@@ -143,11 +143,8 @@
 ;; package-install color-moccur
 ;;(when (require 'color-moccur nil t)
   ;;グローバルマップにoccur-by-moccurを割り当て
-<<<<<<< HEAD
   ;;(define-key global-map (kbd "C-s") 'occur-by-moccur))
-=======
-  (define-key global-map (kbd "C-q") 'occur-by-moccur))
->>>>>>> 81a139bddcc4195a209210c0fb3a74097d561378
+  (define-key global-map (kbd "C-q") 'occur-by-moccur)
 
 ;;tramp
 (require 'tramp)						;sshでサーバにあるファイルを直接変更できる

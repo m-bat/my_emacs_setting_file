@@ -52,10 +52,23 @@
 (global-linum-mode)
 ;;インテンドの設定
 (setq default-tab-width 4)
-										; ホックを使った設定
+
+;;ハイライトインテンド
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-method 'column)
+(setq highlight-indent-guides-auto-odd-face-perc 15)
+
+(setq highlight-indent-guides-method 'character)
+
+; ホックを使った設定
 (defun my-c-c++-mode-init ()
   (setq c-basic-offset 4)
-  )
+ )
+
+(setq-default c-basic-offset 4     ;;基本インデント量4
+              tab-width 4          ;;タブ幅4
+               indent-tabs-mode nil)  ;;インデントをタブでするかスペースでするか
+
 (add-hook 'c-mode-hook 'my-c-c++-mode-init)
 (add-hook 'c++-mode-hook 'my-c-c++-mode-init)
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -83,13 +96,21 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(web-mode php-mode moccur-edit color-moccur undohist anything flycheck-pos-tip))))
+	(highlight-indent-guides web-mode php-mode moccur-edit color-moccur undohist anything flycheck-pos-tip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(web-mode-comment-face ((t (:foreground "#D9333F"))))
+ '(web-mode-css-at-rule-face ((t (:foreground "#FF7F00"))))
+ '(web-mode-css-pseudo-class-face ((t (:foreground "#FF7F00"))))
+ '(web-mode-css-rule-face ((t (:foreground "#A0D8EF"))))
+ '(web-mode-doctype-face ((t (:foreground "#82AE46"))))
+ '(web-mode-html-attr-name-face ((t (:foreground "#C97586"))))
+ '(web-mode-html-attr-value-face ((t (:foreground "#82AE46"))))
+ '(web-mode-html-tag-face ((t (:foreground "#E6B422" :weight bold))))
+ '(web-mode-server-comment-face ((t (:foreground "#D9333F")))))
 ;;package-install anything
 ;;(require 'anything-config)
 (define-key global-map (kbd "C-x b") 'anything) ;anythingをC-x bで開くようにする
@@ -209,25 +230,6 @@
   )
 (add-hook 'web-mode-hook  'web-mode-hook)
 ;; 色の設定
-(custom-set-faces
- '(web-mode-doctype-face
-   ((t (:foreground "#82AE46"))))                          ; doctype
- '(web-mode-html-tag-face
-   ((t (:foreground "#E6B422" :weight bold))))             ; 要素名
- '(web-mode-html-attr-name-face
-   ((t (:foreground "#C97586"))))                          ; 属性名など
- '(web-mode-html-attr-value-face
-   ((t (:foreground "#82AE46"))))                          ; 属性値
- '(web-mode-comment-face
-   ((t (:foreground "#D9333F"))))                          ; コメント
- '(web-mode-server-comment-face
-   ((t (:foreground "#D9333F"))))                          ; コメント
- '(web-mode-css-rule-face
-   ((t (:foreground "#A0D8EF"))))                          ; cssのタグ
- '(web-mode-css-pseudo-class-face
-   ((t (:foreground "#FF7F00"))))                          ; css 疑似クラス
- '(web-mode-css-at-rule-face
-   ((t (:foreground "#FF7F00"))))                          ; cssのタグ
- )
+
 
 

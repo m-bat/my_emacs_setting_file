@@ -53,12 +53,6 @@
 ;;インテンドの設定
 (setq default-tab-width 4)
 
-;;ハイライトインテンド
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'column)
-(setq highlight-indent-guides-auto-odd-face-perc 15)
-
-(setq highlight-indent-guides-method 'character)
 
 ; ホックを使った設定
 (defun my-c-c++-mode-init ()
@@ -96,7 +90,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(highlight-indent-guides web-mode php-mode moccur-edit color-moccur undohist anything flycheck-pos-tip))))
+    (yatex markdown-mode highlight-indent-guides web-mode php-mode moccur-edit color-moccur undohist anything flycheck-pos-tip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -232,4 +226,54 @@
 ;; 色の設定
 
 
+;; markdown-mode
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(setq markdown-command "/usr/local/bin/multimarkdown")
 
+
+;;
+;; YaTeX
+;;
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq auto-mode-alist
+      (append '(("\\.tex$" . yatex-mode)
+        ("\\.ltx$" . yatex-mode)
+        ("\\.cls$" . yatex-mode)
+        ("\\.sty$" . yatex-mode)
+        ("\\.clo$" . yatex-mode)
+        ("\\.bbl$" . yatex-mode)) auto-mode-alist))
+(setq YaTeX-inhibit-prefix-letter nil)  ;; screenのコマンドC-tとかぶる。tじゃなくnil
+(setq YaTeX-kanji-code nil)
+(setq YaTeX-latex-message-code 'utf-8)
+(setq YaTeX-use-AMS-LaTeX t)
+(setq YaTeX-dvi2-command-ext-alist
+      '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
+(setq tex-command "uplatex -synctex=1")
+;;(setq tex-command "platex -synctex=1")
+;;(setq tex-command "pdflatex -synctex=1")
+
+
+;;(setq dvi2-command "xdvi")
+;;(when (equal system-type 'darwin)     ;; for Mac only
+  ;;(setq dvi2-command "/usr/bin/open -a Skim")
+  ;;(setq tex-pdfview-command "/usr/bin/open -a Skim"))
+
+;; preview
+(setq dvi2-command "/usr/bin/open -a Skim")
+(defvar YaTeX-dvi2-command-ext-alist
+  '(("ghostview\\|gv" . ".ps")
+    ("acroread\\|pdf\\|Skim\\|open" . ".pdf")
+    ("Skim" . ".dvi")))
+
+(setq bibtex-command "pbibtex")
+(setq dviprint-command-format "dvipdfmx")
+
+(add-hook 'yatex-mode-hook '(lambda () (auto-fill-mode -1))) ;; 自動で改行しない
+
+;;
+;; texファイルを開くと自動でRefTexモード
+;;(add-hook 'latex-mode-hook 'turn-on-reftex)
+(add-hook 'yatex-mode-hook 'turn-on-reftex)
